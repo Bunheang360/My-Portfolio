@@ -1,97 +1,77 @@
-'use client'
+import { ArrowUp } from 'lucide-react'
 
-import { motion } from 'motion/react'
+const links = [
+  { name: 'Work', href: '#projects' },
+  { name: 'About', href: '#about' },
+  { name: 'Experience', href: '#experience' },
+  { name: 'Stack', href: '#technologies' },
+  { name: 'Certificates', href: '#certifications' },
+  { name: 'Contact', href: '#contact' },
+  { name: 'Download CV', href: '/downloads/chheng-bunheang-cv.pdf', download: true },
+]
+
+const social = [
+  { name: 'LinkedIn', href: 'https://linkedin.com/in/cbh360' },
+  { name: 'Telegram', href: 'https://t.me/CBHeang' },
+  { name: 'Email', href: 'mailto:2005chhengbunheang@gmail.com' },
+]
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-gray-200 bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.div
-          className="grid md:grid-cols-3 gap-8 mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{ type: 'spring', stiffness: 100, damping: 15 }}
-        >
-          {/* Brand */}
+    <footer className="overflow-hidden border-t border-line px-3 pt-16 sm:px-6">
+      <div className="mx-auto max-w-6xl">
+        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">CB</h3>
-            <p className="text-gray-600">Fullstack Developer based in Phnom Penh, Cambodia</p>
+            <p className="text-lg font-semibold tracking-tight text-text">Chheng Bunheang</p>
+            <p className="mt-2 max-w-xs text-text-2">Fullstack developer based in Phnom Penh, Cambodia.</p>
+            <a href="#hero" className="btn btn-ghost mt-6 !min-h-10">
+              <ArrowUp size={16} aria-hidden="true" />
+              Back to top
+            </a>
           </div>
-
-          {/* Quick Links */}
+          <nav aria-label="Footer">
+            <ul className="space-y-2.5">
+              {links.map((link) => (
+                <li key={link.name}>
+                  <a href={link.href} download={link.download} className="text-text-2 transition-colors hover:text-text">
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
           <div>
-            <h4 className="font-bold text-gray-900 mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="#hero" className="text-gray-600 hover:text-gray-900 transition-colors">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="#about" className="text-gray-600 hover:text-gray-900 transition-colors">
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="#projects" className="text-gray-600 hover:text-gray-900 transition-colors">
-                  Projects
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className="text-gray-600 hover:text-gray-900 transition-colors">
-                  Contact
-                </a>
-              </li>
+            <h2 className="sr-only">Social links</h2>
+            <ul className="space-y-2.5">
+              {social.map((item) => (
+                <li key={item.name}>
+                  <a
+                    href={item.href}
+                    target={item.href.startsWith('http') ? '_blank' : undefined}
+                    rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    className="text-text-2 transition-colors hover:text-text"
+                  >
+                    {item.name}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
-
-          {/* Connect */}
-          <div>
-            <h4 className="font-bold text-gray-900 mb-4">Connect</h4>
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href="https://linkedin.com/in/cbh360"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
-                >
-                  LinkedIn
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://github.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
-                >
-                  GitHub
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:2005chhengbunheang@gmail.com"
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
-                >
-                  Email
-                </a>
-              </li>
-            </ul>
-          </div>
-        </motion.div>
-
-        <div className="border-t border-gray-200 pt-8 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-gray-600 text-sm">
-            © {currentYear} Chheng Bunheang. All rights reserved.
-          </p>
-          <p className="text-gray-600 text-sm">
-            Designed with care • Built with React & Tailwind CSS
-          </p>
         </div>
+
+        <div className="mt-14 flex flex-col justify-between gap-2 text-sm text-text-3 sm:flex-row">
+          <p>© {currentYear} Chheng Bunheang</p>
+          <p>Built with Next.js and Tailwind CSS</p>
+        </div>
+
+        <p
+          aria-hidden="true"
+          className="display pointer-events-none mt-8 select-none whitespace-nowrap text-center text-[15.5vw] leading-[0.8] text-ink-3 lg:text-[11.6rem]"
+        >
+          BUNHEANG
+        </p>
       </div>
     </footer>
   )

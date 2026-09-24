@@ -1,120 +1,107 @@
 'use client'
 
-import { motion } from 'motion/react'
+import type { CSSProperties } from 'react'
 import {
   SiJavascript, SiTypescript, SiCplusplus, SiHtml5, SiCss, SiDart, SiPython, SiPhp,
   SiReact, SiNextdotjs, SiTailwindcss, SiFlutter, SiExpress, SiDjango, SiLaravel,
   SiNodedotjs, SiPostgresql, SiMongodb, SiMysql, SiMariadb, SiFirebase, SiSupabase,
-  SiDocker, SiGit, SiLinux, SiPostman, SiFigma, SiDigitalocean,
+  SiGit, SiLinux, SiPostman, SiFigma,
 } from 'react-icons/si'
 import { FaJava } from 'react-icons/fa'
+import SpotlightGroup from '@/components/spotlight'
+import SectionHeading from '@/components/section-heading'
+import { cn } from '@/lib/utils'
 
+// Brand colors show on hover only; dark-on-dark brands get a light stand-in.
 const categories = [
   {
-    title: 'Programming Languages',
+    title: 'Languages',
+    span: 'lg:col-span-7',
     items: [
       { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E' },
       { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
-      { name: 'C++',        icon: SiCplusplus,  color: '#00599C' },
-      { name: 'Java',       icon: FaJava,        color: '#ED8B00' },
-      { name: 'HTML5',      icon: SiHtml5,       color: '#E34F26' },
-      { name: 'CSS3',       icon: SiCss,         color: '#1572B6' },
-      { name: 'Dart',       icon: SiDart,        color: '#0175C2' },
-      { name: 'Python',     icon: SiPython,      color: '#3776AB' },
-      { name: 'PHP',        icon: SiPhp,         color: '#777BB4' },
+      { name: 'Java', icon: FaJava, color: '#ED8B00' },
+      { name: 'Python', icon: SiPython, color: '#FFD43B' },
+      { name: 'PHP', icon: SiPhp, color: '#8993BE' },
+      { name: 'Dart', icon: SiDart, color: '#0175C2' },
+      { name: 'C++', icon: SiCplusplus, color: '#659AD2' },
+      { name: 'HTML5', icon: SiHtml5, color: '#E34F26' },
+      { name: 'CSS3', icon: SiCss, color: '#2965F1' },
     ],
   },
   {
-    title: 'Framework',
+    title: 'Frameworks',
+    span: 'lg:col-span-5',
     items: [
-      { name: 'React',       icon: SiReact,       color: '#61DAFB' },
-      { name: 'Next.js',     icon: SiNextdotjs,   color: '#000000' },
-      { name: 'TailwindCSS', icon: SiTailwindcss, color: '#06B6D4' },
-      { name: 'Flutter',     icon: SiFlutter,     color: '#02569B' },
-      { name: 'Express',     icon: SiExpress,     color: '#404040' },
-      { name: 'Django',      icon: SiDjango,      color: '#092E20' },
-      { name: 'Laravel',     icon: SiLaravel,     color: '#FF2D20' },
+      { name: 'React', icon: SiReact, color: '#61DAFB' },
+      { name: 'Next.js', icon: SiNextdotjs, color: '#FFFFFF' },
+      { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4' },
+      { name: 'Flutter', icon: SiFlutter, color: '#54C5F8' },
+      { name: 'Express', icon: SiExpress, color: '#FFFFFF' },
+      { name: 'Django', icon: SiDjango, color: '#44B78B' },
+      { name: 'Laravel', icon: SiLaravel, color: '#FF2D20' },
     ],
   },
   {
-    title: 'Backend & Databases',
+    title: 'Backend & databases',
+    span: 'lg:col-span-7',
     items: [
-      { name: 'Node.js',     icon: SiNodedotjs,    color: '#339933' },
-      { name: 'PostgreSQL',  icon: SiPostgresql,   color: '#4169E1' },
-      { name: 'MongoDB',     icon: SiMongodb,      color: '#47A248' },
-      { name: 'MySQL',       icon: SiMysql,        color: '#4479A1' },
-      { name: 'MariaDB',     icon: SiMariadb,      color: '#003545' },
-      { name: 'Firebase',    icon: SiFirebase,     color: '#FFCA28' },
-      { name: 'Supabase',    icon: SiSupabase,     color: '#3ECF8E' },
+      { name: 'Node.js', icon: SiNodedotjs, color: '#5FA04E' },
+      { name: 'PostgreSQL', icon: SiPostgresql, color: '#6B9BD8' },
+      { name: 'MySQL', icon: SiMysql, color: '#6FA8DC' },
+      { name: 'MariaDB', icon: SiMariadb, color: '#C49A6C' },
+      { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
+      { name: 'Firebase', icon: SiFirebase, color: '#FFCA28' },
+      { name: 'Supabase', icon: SiSupabase, color: '#3ECF8E' },
     ],
   },
   {
-    title: 'DevOps & Tools',
+    title: 'Tools',
+    span: 'lg:col-span-5',
     items: [
-      { name: 'Git',           icon: SiGit,          color: '#F05032' },
-      { name: 'Linux',         icon: SiLinux,        color: '#FCC624' },
-      { name: 'Postman',       icon: SiPostman,      color: '#FF6C37' },
-      { name: 'Figma',         icon: SiFigma,        color: '#F24E1E' },
+      { name: 'Git', icon: SiGit, color: '#F05032' },
+      { name: 'Linux', icon: SiLinux, color: '#FCC624' },
+      { name: 'Postman', icon: SiPostman, color: '#FF6C37' },
+      { name: 'Figma', icon: SiFigma, color: '#F24E1E' },
     ],
   },
 ]
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.07, delayChildren: 0.2 },
-  },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring', stiffness: 100, damping: 15 },
-  },
-}
-
 export default function Skills() {
   return (
-    <section id="technologies" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-16 text-center">
-          Technologies
-        </h2>
+    <section id="technologies" aria-labelledby="stack-title" className="px-3 py-20 sm:px-6 sm:py-28">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          id="stack-title"
+          title="My stack"
+          lede="The languages, frameworks, and tools I reach for, from the database up to the interface."
+        />
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <SpotlightGroup className="grid gap-3 sm:gap-4 lg:grid-cols-12">
           {categories.map((category) => (
-            <div key={category.title}>
-              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-6">
-                {category.title}
-              </h3>
-              <motion.div
-                className="grid grid-cols-2 gap-4"
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: false, amount: 0.2 }}
-              >
+            <div key={category.title} className={cn('tile p-5 sm:p-7', category.span)}>
+              <div className="mb-6 flex items-baseline justify-between">
+                <h3 className="text-lg font-semibold tracking-tight text-text">{category.title}</h3>
+              </div>
+              <ul className="flex flex-wrap gap-2">
                 {category.items.map(({ name, icon: Icon, color }) => (
-                  <motion.div
+                  <li
                     key={name}
-                    variants={itemVariants}
-                    whileHover={{
-                      y: -8,
-                      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
-                    }}
-                    className="flex items-center gap-3 bg-white border border-gray-200 rounded-lg px-4 py-3 cursor-pointer"
+                    style={{ '--brand': color } as CSSProperties}
+                    className="group flex h-11 items-center gap-2.5 rounded-xl bg-white/[0.03] px-3.5 shadow-[inset_0_0_0_1px_var(--line)] transition-colors duration-300 hover:bg-white/[0.06]"
                   >
-                    <Icon size={28} color={color} />
-                    <span className="text-sm font-medium text-gray-800">{name}</span>
-                  </motion.div>
+                    <Icon
+                      size={18}
+                      aria-hidden="true"
+                      className="text-text-2 transition-colors duration-300 group-hover:text-[var(--brand)]"
+                    />
+                    <span className="text-sm font-medium text-text">{name}</span>
+                  </li>
                 ))}
-              </motion.div>
+              </ul>
             </div>
           ))}
-        </div>
+        </SpotlightGroup>
       </div>
     </section>
   )
